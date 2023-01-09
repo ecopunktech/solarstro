@@ -86,7 +86,6 @@ export class Catastro {
 	}
 
 	async mapCatatroData(data: any) {
-		// {"consulta_dnp":{"$":{"xmlns:xsd":"http://www.w3.org/2001/XMLSchema","xmlns:xsi":"http://www.w3.org/2001/XMLSchema-instance","xmlns":"http://www.catastro.meh.es/"},"control":[{"cudnp":["1"],"cucul":["1"]}],"bico":[{"bi":[{"idbi":[{"cn":["RU"],"rc":[{"pc1":["33034A0"],"pc2":["6100069"],"car":["0000"],"cc1":["J"],"cc2":["M"]}]}],"dt":[{"loine":[{"cp":["33"],"cm":["34"]}],"cmc":["34"],"np":["ASTURIAS"],"nm":["VALDES"],"locs":[{"lors":[{"lorus":[{"czc":["0"],"cpp":[{"cpo":["61"],"cpa":["69"]}],"npa":["GRANDA"],"cpaj":["3275"]}]}]}]}],"ldt":["Polígono 61 Parcela 69 GRANDA. VALDES (ASTURIAS)"],"debi":[{"luso":["Agrario"],"sfc":["0"]}]}],"lspr":[{"spr":[{"cspr":["0"],"dspr":[{"ccc":["MB"],"dcc":["MONTE BAJO"],"ip":["02"],"ssp":["23811"]}]}]}]}]}}
 		const nParcelas = data.consulta_dnp.control.reduce((acc: any, item: any) => {
 			return item.cudnp;
 		});
