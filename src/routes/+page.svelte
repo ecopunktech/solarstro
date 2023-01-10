@@ -11,5 +11,13 @@
     Bienvenido a <strong>Solarstro</strong>
 </h1>
 <CatastroInput />
+<button
+  type="button"
+  on:click={() => {
+    throw new Error("Sentry Frontend Error");
+  }}
+>
+  Throw error
+</button>
 </section>
 

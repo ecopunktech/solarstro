@@ -35,6 +35,9 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@sentry/node": "^7.30.0",
+		"@sentry/svelte": "^7.30.0",
+		"@sentry/tracing": "^7.30.0",
 		"buffer": "^6.0.3",
 		"events": "^3.3.0",
 		"stream": "^0.0.2",

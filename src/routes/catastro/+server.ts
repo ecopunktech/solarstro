@@ -1,6 +1,5 @@
 import type { RequestHandler } from './$types';
 import { json } from '@sveltejs/kit';
-import { parseStringPromise } from 'xml2js';
 import {Catastro} from '$lib/catastro/catastro'
 /** @type {import('./$types').RequestHandler} */
 export const GET: RequestHandler = async ({ url }) => {
