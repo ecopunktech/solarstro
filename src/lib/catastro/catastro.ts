@@ -1,4 +1,4 @@
-import { parseStringPromise } from 'xml2js';
+import { XMLParser } from 'fast-xml-parser';
 
 class Coor {
 	x: string;
@@ -70,29 +70,23 @@ export class Catastro {
 				},
 				body: `MUNICIPIO=&RC=${this.rc}&PROVINCIA=`,
 				method: 'POST',
-				mode: 'cors',
-				credentials: 'include'
 			}
 		);
 		if (responseM2.status !== 200) {
 			console.log(responseM2.status);
 			return Error('Error getting data from catastro');
 		}
+
 		let XMLData = await responseM2.text();
+		const parser = new XMLParser();
+		let jObj = parser.parse(XMLData);
 		if (XMLData.includes('Error')) {
 			return Error('Error getting data from catastro');
 		}
-		return parseStringPromise(XMLData);
+		return jObj;
 	}
 
 	async mapCatatroData(data: any) {
-		const nParcelas = data.consulta_dnp.control.reduce((acc: any, item: any) => {
-			return item.cudnp;
-		});
-
-		const nSubparcelas = data.consulta_dnp.control.reduce((acc: any, item: any) => {
-			return item.cucul;
-		});
 		this.setMunicipio(data);
 		this.setProvincia(data);
 		this.setDireccion(data);
@@ -102,79 +96,44 @@ export class Catastro {
 	}
 
 	setMunicipio(data: any) {
-		const bi = data.consulta_dnp.bico.reduce((acc: any, item: any) => {
-			return item.bi;
-		});
-		const dt = bi.bi.reduce((acc: any, item: any) => {
-			return item.dt;
-		});
-		const nm = dt.dt.reduce((acc: any, item: any) => {
-			return item.nm;
-		});
+		const bi = data.consulta_dnp.bico.bi;
+		const dt = bi.dt;
+		const nm = dt.nm;
 
-		this.municipio = nm.nm.shift() as string;
+		this.municipio = nm;
 	}
 
 	setProvincia(data: any) {
-		const bi = data.consulta_dnp.bico.reduce((acc: any, item: any) => {
-			return item.bi;
-		});
-		const dt = bi.bi.reduce((acc: any, item: any) => {
-			return item.dt;
-		});
-		const np = dt.dt.reduce((acc: any, item: any) => {
-			return item.np;
-		});
-		this.provincia = np.np.shift() as string;
+		const bi = data.consulta_dnp.bico.bi;
+		const dt = bi.dt;
+		const np = dt.nm;
+		this.provincia = np;
 	}
 
 	setDireccion(data: any) {
-		// this.direccion = data.consulta_dnp.bico.reduce((acc: any, item: any) => {
-		// 	return item.bi.reduce((acc: any, item: any) => {
-		// 		return item.ldt.shift() as string;
-		// 	});
-		// });
-
-		const bi = data.consulta_dnp.bico.reduce((acc: any, item: any) => {
-			return item.bi;
-		});
-		const ldt = bi.bi.reduce((acc: any, item: any) => {
-			return item.ldt;
-		});
-		this.direccion = ldt.ldt.shift() as string;
+		const bi = data.consulta_dnp.bico.bi;
+		this.direccion = bi.ldt;
 	}
 
 	setUso(data: any) {
-		const bi = data.consulta_dnp.bico.reduce((acc: any, item: any) => {
-			return item.bi;
-		});
-		const debi = bi.bi.reduce((acc: any, item: any) => {
-			return item.debi;
-		});
-		const luso = debi.debi.reduce((acc: any, item: any) => {
-			return item.luso;
-		});
-		this.uso = luso.luso.shift() as string;
+		const bi = data.consulta_dnp.bico.bi;
+		const debi = bi.debi;
+		const luso = debi.luso;
+		this.uso = luso;
 	}
 
 	setSubparcelas(data: any) {
 		const subpar: Subparcelas[] = [];
-		data.consulta_dnp.bico.forEach((element: any) => {
-			element.lspr.forEach((element: any) => {
-				element.spr.forEach((element: any) => {
-					element.dspr.forEach((element: any) => {
-						subpar.push(
-							new Subparcelas(
-								element.ccc.shift() as string,
-								element.ssp.shift() as number,
-								element.ip.shift() as number,
-								element.dcc.shift() as string
-							)
-						);
-					});
-				});
-			});
-		});
+		const element = data.consulta_dnp.bico.lspr.spr.dspr;
+		subpar.push(
+			new Subparcelas(
+				element.ccc as string,
+				element.ssp as number,
+				element.ip as number,
+				element.dcc as string
+			)
+		);
+
 		this.subparcelas = subpar;
 	}
 
@@ -191,24 +150,25 @@ export class Catastro {
 		if (responseCoor.status !== 200) {
 			return Error('Error getting data from catastro');
 		}
-		const XMLData = await responseCoor.text();
-		if (XMLData.includes('Error')) {
-			return Error('Error getting data from catastro');
-		}
-		const JSONData = await parseStringPromise(XMLData);
+		let XMLData = await responseCoor.text();
+		const parser = new XMLParser();
+		const JSONData = parser.parse(XMLData);
+		console.log('JSONData', JSON.stringify(JSONData));
 		// TODO: Check if we need to get all coordinates or just the first one
 		// console.log(JSON.stringify(JSONData));
-		const coordinates = JSONData.consulta_coordenadas.coordenadas.reduce((acc: any, item: any) => {
-			return item.geo;
-		});
-		const geo = coordinates.coord.reduce((acc: any, item: any) => {
-			return new Coor(item.xcen.shift(), item.ycen.shift());
-		});
-		const coor = geo.geo.reduce((acc: any, item: any) => {
-			return new Coor(item.xcen.shift(), item.ycen.shift());
-		});
-		const x = coor.xcen.shift();
-		const y = coor.ycen.shift();
+		// const coordinates = JSONData.end({ format: 'object' }).consulta_coordenadas.coordenadas.reduce(
+		// 	(acc: any, item: any) => {
+		// 		return item.geo;
+		// 	}
+		// );
+		// const geo = coordinates.coord.reduce((acc: any, item: any) => {
+		// 	return new Coor(item.xcen.shift(), item.ycen.shift());
+		// });
+		// const coor = geo.geo.reduce((acc: any, item: any) => {
+		// 	return new Coor(item.xcen.shift(), item.ycen.shift());
+		// });
+		const x = JSONData.consulta_coordenadas.coordenadas.coord.geo.xcen;
+		const y = JSONData.consulta_coordenadas.coordenadas.coord.geo.ycen;
 		this.coor = new Coor(x, y);
 		return this.coor;
 		// const lon = JSONData.coordenadas.X;
