@@ -70,8 +70,6 @@ export class Catastro {
 				},
 				body: `MUNICIPIO=&RC=${this.rc}&PROVINCIA=`,
 				method: 'POST',
-				mode: 'cors',
-				credentials: 'include'
 			}
 		);
 		if (responseM2.status !== 200) {
