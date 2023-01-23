@@ -55,7 +55,6 @@ export class Catastro {
 		} else {
 			await this.mapCatatroData(data);
 		}
-		// return result;
 	}
 
 	async getRawData(): Promise<any | Error> {
@@ -69,11 +68,10 @@ export class Catastro {
 					'upgrade-insecure-requests': '1'
 				},
 				body: `MUNICIPIO=&RC=${this.rc}&PROVINCIA=`,
-				method: 'POST',
+				method: 'POST'
 			}
 		);
 		if (responseM2.status !== 200) {
-			console.log(responseM2.status);
 			return Error('Error getting data from catastro');
 		}
 
@@ -153,25 +151,9 @@ export class Catastro {
 		let XMLData = await responseCoor.text();
 		const parser = new XMLParser();
 		const JSONData = parser.parse(XMLData);
-		console.log('JSONData', JSON.stringify(JSONData));
-		// TODO: Check if we need to get all coordinates or just the first one
-		// console.log(JSON.stringify(JSONData));
-		// const coordinates = JSONData.end({ format: 'object' }).consulta_coordenadas.coordenadas.reduce(
-		// 	(acc: any, item: any) => {
-		// 		return item.geo;
-		// 	}
-		// );
-		// const geo = coordinates.coord.reduce((acc: any, item: any) => {
-		// 	return new Coor(item.xcen.shift(), item.ycen.shift());
-		// });
-		// const coor = geo.geo.reduce((acc: any, item: any) => {
-		// 	return new Coor(item.xcen.shift(), item.ycen.shift());
-		// });
 		const x = JSONData.consulta_coordenadas.coordenadas.coord.geo.xcen;
 		const y = JSONData.consulta_coordenadas.coordenadas.coord.geo.ycen;
 		this.coor = new Coor(x, y);
 		return this.coor;
-		// const lon = JSONData.coordenadas.X;
-		// this.coor = new Coor(JSONData.Coordenadas.X, JSONData.Coordenadas.Y);
 	}
 }
