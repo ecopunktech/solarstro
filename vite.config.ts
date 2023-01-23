@@ -6,6 +6,7 @@ const config: UserConfig = {
 	test: {
 		include: ['src/**/*.{test,spec}.{js,ts}']
 	}
+	
 };
 
 export default config;

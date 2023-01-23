@@ -35,12 +35,19 @@
 		m2 = getTotalSuperficie(catastroData.subparcelas);
 		lat = catastroData.coor.y;
 		lon = catastroData.coor.x;
+		console.log(catastroData);
+		console.log(catastroData.direccion);
+		console.log(direccion)
 		const pID = rc.slice(0, 2);
 		const mID = rc.slice(2, 5);
 		img_source = `http://www1.sedecatastro.gob.es/Cartografia/GeneraGraficoParcela.aspx?del=${pID}&mun=${mID}&refcat=${rc}&AnchoPixels=300&AltoPixels=300`;
 		unique = {};
 	}
 	let unique = {};
+
+	function restart() {
+		unique = {}; // every {} is unique, {} === {} evaluates to false
+	}
 </script>
 
 <p>
