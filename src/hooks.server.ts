@@ -6,6 +6,7 @@ export const handleError = (({ error, event }) => {
     dsn: SENTRY_DSN,
     release: '1.0.0',
   });
+  // console.log('error', error);
   const errorId = sentry.captureException(error);
  
   return {
