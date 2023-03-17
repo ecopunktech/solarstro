@@ -1,7 +1,7 @@
 <script>
+  import CatastroList from './CatastroList.svelte';
+
 	// import {validateRC} from '$lib/catastro/catastro.ts';
-	let provincia = '';
-	let municipio = '';
 	let rc = '';
 	let m2 = '';
 	let lat = 0;
@@ -57,19 +57,25 @@
 	function isValidRC(rc1) {
 		return !regex.test(rc1);
 	}
+	import { Button, Search, ImagePlaceholder } from 'flowbite-svelte';
 </script>
 
-<p>
-	Escribe el numero de catastro de tu finca
-	<input type="text" placeholder="Codigo catastral" bind:value={rc} />
-	<button disabled={isValidRC(rc)} on:click={getCatrastroInfo}> Empezar </button>
+<div color="purple" class="auto-rows-max">
+	<div color="purple" class="my-8 p-6 rounded-xl shadow-lg">
+		<form color="purple" id="search" on:submit={getCatrastroInfo}>
+		<Search color="purple" placeholder="Escribe el numero de catastro " bind:value={rc}>
+			<Button color="primary" type="submit" disabled={isValidRC(rc) }>Search</Button>
+		  </Search>
+		</form>
+	</div>
 	{#if direccion}
-		<p>El numero de catastro es <strong>{rc}</strong></p>
-		<p>La direccion es <strong>{direccion}</strong></p>
-		<p>La superficie disponible es de <strong>{m2}</strong> m2</p>
-		<!-- {#key unique}
-			<Map bind:lat bind:lon />
-		{/key} -->
-		<img src={img_source} alt="figura" />
+		<CatastroList rc={rc} img_source={img_source} m2={m2} direccion={direccion}></CatastroList>
 	{/if}
-</p>
+	{#if !direccion}
+	<div class="p-6 bg-white rounded-xl shadow-lg">
+		<ImagePlaceholder>
+		</ImagePlaceholder>
+	
+	</div>
+	{/if}
+</div>
