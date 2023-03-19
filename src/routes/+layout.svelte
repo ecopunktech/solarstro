@@ -19,3 +19,4 @@
 		<NavLi color="purple" href="/docs">Docs</NavLi>
 	</NavUl>
 </Navbar>
+<slot></slot>

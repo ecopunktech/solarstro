@@ -10,7 +10,7 @@
 
 </script>
 
-<div class="p-2 flex items-center justify-center"   >
+<div class="p-2 flex items-center justify-center">
 		<Card color="primary" horizontal size="xl" class="grid md:grid-cols-2">
             <div class="p-2">
             <Img src={img_source} alt="image finca" class="rounded-t-lg" />
@@ -28,7 +28,7 @@
 			<p class="mb-3 font-normal text-gray-700 dark:text-gray-400 leading-tight">
 				La superficie disponible es de <strong>{m2}</strong> m2
 			</p>
-			<Button color="primary">
+			<Button color="primary" href={`report/${rc}`}>
 				Elegir <svg
 					xmlns="http://www.w3.org/2000/svg"
 					fill="none"

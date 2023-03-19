@@ -1,5 +1,4 @@
 <script>
-	import Header from './Header.svelte';
 	import CatastroInput from './CatastroInput.svelte';
 
 </script>
@@ -15,7 +14,6 @@
 
 
 <section class="hero">
-	<Header />
 
 	<div class="container">
 
