@@ -71,7 +71,7 @@ export class Catastro {
 		const data = await this.getRawData();
 		if (data instanceof Error) {
 			console.error(data);
-			throw data;
+			throw Error('Stupid Error');;
 		} else {
 			await this.mapCatatroData(data);
 		}
@@ -91,6 +91,8 @@ export class Catastro {
 				method: 'POST'
 			}
 		);
+		
+
 		if (responseM2.status !== 200) {
 			return Error('Error getting data from catastro');
 		}
