@@ -71,9 +71,9 @@ export class Catastro {
 		const data = await this.getRawData();
 		if (data instanceof Error) {
 			console.error(data);
-			throw Error('Stupid Error');;
+			return Error('Stupid Error');;
 		} else {
-			await this.mapCatatroData(data);
+			return await this.mapCatatroData(data);
 		}
 	}
 
@@ -112,7 +112,7 @@ export class Catastro {
 		this.setDireccion(data);
 		this.setUso(data);
 		this.setSubparcelas(data);
-		await this.setRemoteCoor();
+		// await this.setRemoteCoor();
 	}
 
 	setMunicipio(data: any) {
