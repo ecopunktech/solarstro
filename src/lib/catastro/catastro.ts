@@ -71,7 +71,7 @@ export class Catastro {
 		const data = await this.getRawData();
 		if (data instanceof Error) {
 			console.log(data);
-			throw Error('Error getting data from catastro', data);
+			throw data;
 		} else {
 			await this.mapCatatroData(data);
 		}
