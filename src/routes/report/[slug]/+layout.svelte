@@ -6,8 +6,8 @@
   </script>
   
   <div class="relative flex">
-	<div class="sticky top-0 h-screen w-64 overflow-y-auto">
-	  <Sidebar>
+	<div class="sticky top-0 h-screen w-64 overflow-y-auto hidden md:block">
+		<Sidebar>
 		<SidebarWrapper>
 		  <SidebarGroup>
 			<SidebarItem label="Parcel Information" href='#parcel' active={activeUrl === '#parcel'} />
