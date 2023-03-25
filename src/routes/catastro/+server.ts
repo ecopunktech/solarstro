@@ -11,6 +11,11 @@ export const GET: RequestHandler = async ({ url }) => {
 		return json({ error: 'RC is not valid' });
 	}
 	const catatro = new Catastro(rc);
-	await catatro.getRemoteData();
+	try {
+		await catatro.getRemoteData();
+	} catch (error) {
+		return json({ error: error });
+	}
+	
 	return new Response(JSON.stringify(catatro));
 };
