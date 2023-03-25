@@ -71,7 +71,11 @@ export interface SolarPanelData {
 
 export const load = (async ({ params, url }) => {
 	console.log(url.searchParams.get('percentage'));
-	const dashboard = await fetch(`https://solar-backend.fly.dev/rectangles?rc=${params.slug}`).then(
+    const percentage = url.searchParams.get('percentage');
+    const budget = url.searchParams.get('budget');
+    const localURI = `http://localhost:8080/rectangles?rc=${params.slug}&percentage=${percentage}&budget=${budget}`;
+    const backendURI = `https://solar-backend.fly.dev/rectangles?rc=${params.slug}&percentage=${percentage}&budget=${budget}`;
+	const dashboard = await fetch(backendURI).then(
 		(r) => r.json()
 	);
 	const dasObj: SolarPanelData = dashboard as SolarPanelData;

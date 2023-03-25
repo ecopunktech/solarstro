@@ -12,9 +12,9 @@
 
 	let selected = '';
 	let budget = [
-		{ value: 'min', name: 'Economico' },
+		{ value: 'low', name: 'Economico' },
 		{ value: 'med', name: 'Medio' },
-		{ value: 'max', name: 'Go Big' }
+		{ value: 'high', name: 'Go Big' }
 	];
 
 
