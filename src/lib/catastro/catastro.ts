@@ -67,10 +67,10 @@ export class Catastro {
 	}
 	// Catastro validation
 
-	async getRemoteData() {
+	async getRemoteData(): Promise<any | Error> {
 		const data = await this.getRawData();
 		if (data instanceof Error) {
-			console.log(data);
+			console.error(data);
 			throw data;
 		} else {
 			await this.mapCatatroData(data);
