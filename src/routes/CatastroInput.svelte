@@ -60,22 +60,23 @@
 	import { Button, Search, ImagePlaceholder } from 'flowbite-svelte';
 </script>
 
-<div color="purple" class="auto-rows-max">
+<div>
+	{#if !direccion}
 	<div color="purple" class="my-8 p-6 rounded-xl shadow-lg">
 		<form color="purple" id="search" on:submit={getCatrastroInfo}>
-		<Search color="purple" placeholder="Escribe el numero de catastro " bind:value={rc}>
+		<Search placeholder="Escribe el numero de catastro" bind:value={rc}>
 			<Button color="primary" type="submit" disabled={isValidRC(rc) }>Search</Button>
 		  </Search>
 		</form>
 	</div>
-	{#if direccion}
-		<CatastroList rc={rc} img_source={img_source} m2={m2} direccion={direccion}></CatastroList>
-	{/if}
-	{#if !direccion}
-	<div class="p-6 bg-white rounded-xl shadow-lg">
+	<div class="p-6 rounded-xl shadow-lg">
 		<ImagePlaceholder>
 		</ImagePlaceholder>
 	
 	</div>
 	{/if}
+	{#if direccion}
+		<CatastroList rc={rc} img_source={img_source} m2={m2} direccion={direccion}></CatastroList>
+	{/if}
+	
 </div>
