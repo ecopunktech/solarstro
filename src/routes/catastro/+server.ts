@@ -13,6 +13,7 @@ export const GET: RequestHandler = async ({ url }) => {
 	const catatro = new Catastro(rc);
 	try {
 		catatro.direccion = "mi direccion";
+		console.log(catatro);
 		await catatro.getRemoteData();
 	} catch (error) {
 		return json({ error: error });
