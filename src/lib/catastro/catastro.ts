@@ -1,4 +1,6 @@
 import { XMLParser } from 'fast-xml-parser';
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'
+
 
 class Coor {
 	x: string;
@@ -79,7 +81,7 @@ export class Catastro {
 
 	async getRawData(): Promise<any | Error> {
 		const responseM2 = await fetch(
-			'http://ovc.catastro.meh.es/ovcservweb/OVCSWLocalizacionRC/OVCCallejero.asmx/Consulta_DNPRC',
+			'https://ovc.catastro.meh.es/ovcservweb/OVCSWLocalizacionRC/OVCCallejero.asmx/Consulta_DNPRC',
 			{
 				headers: {
 					accept: 'application/xml',
