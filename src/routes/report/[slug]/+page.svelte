@@ -15,6 +15,18 @@
 		return parseFloat(num).toFixed(2);
 	}
 
+	function formatNumber(num: number): string {
+		const options = {
+			useGrouping: true,
+			maximumFractionDigits: 2,
+			minimumFractionDigits: 2,
+			currencyDisplay: 'symbol',
+			style: 'decimal'
+		};
+
+		return num.toLocaleString('es-ES', options);
+	}
+
 	function formatYears(years: number) {
 		const wholeYears = Math.floor(years);
 		const months = Math.floor((years - wholeYears) * 12);
@@ -50,8 +62,8 @@
 		return { powerGeneration, monthlyIncome };
 	}
 	export let data: PageData;
-	let powerGeneration = getMonthlyIncomeAndPowerGeneration(data.dashboard).powerGeneration
-	let monthlyIncome = getMonthlyIncomeAndPowerGeneration(data.dashboard).monthlyIncome
+	let powerGeneration = getMonthlyIncomeAndPowerGeneration(data.dashboard).powerGeneration;
+	let monthlyIncome = getMonthlyIncomeAndPowerGeneration(data.dashboard).monthlyIncome;
 	import { page } from '$app/stores';
 	// let spanClass = 'flex-1 ml-3 whitespace-nowrap';
 	$: areaUsed = $page.url.searchParams.get('percentage');
@@ -80,11 +92,13 @@
 				</div>
 				<div class="flex flex-col pb-3">
 					<DescriptionList tag="dt" class="mb-1">Total Area:</DescriptionList>
-					<DescriptionList tag="dd">{data.dashboard.area.toFixed(2)} m²</DescriptionList>
+					<DescriptionList tag="dd">{formatNumber(data.dashboard.area)} m²</DescriptionList>
 				</div>
 				<div class="flex flex-col pb-3">
 					<DescriptionList tag="dt" class="mb-1">Area Used:</DescriptionList>
-					<DescriptionList tag="dd">{getAreaUsed(data.dashboard.area,areaUsed).toFixed(2)} m²</DescriptionList>
+					<DescriptionList tag="dd"
+						>{formatNumber(getAreaUsed(data.dashboard.area, areaUsed))} m²</DescriptionList
+					>
 				</div>
 			</List>
 		</div>
@@ -95,7 +109,7 @@
 			<div class="flex flex-col pb-3">
 				<DescriptionList tag="dt" class="mb-1">Total Power:</DescriptionList>
 				<DescriptionList tag="dd"
-					>{data.dashboard.solar_info.totalPower.toFixed(2)} kW</DescriptionList
+					>{formatNumber(data.dashboard.solar_info.totalPower)} kW</DescriptionList
 				>
 			</div>
 			<div class="flex flex-col pb-3">
@@ -105,13 +119,13 @@
 			<div class="flex flex-col pb-3">
 				<DescriptionList tag="dt" class="mb-1">Total Installation Cost:</DescriptionList>
 				<DescriptionList tag="dd"
-					>{data.dashboard.solar_info.totalInstallationCost} €</DescriptionList
+					>{formatNumber(data.dashboard.solar_info.totalInstallationCost)} €</DescriptionList
 				>
 			</div>
 			<div class="flex flex-col pb-3">
 				<DescriptionList tag="dt" class="mb-1">Payback Period:</DescriptionList>
 				<DescriptionList tag="dd"
-					>{formatYears(data.dashboard.solar_info.paybackPeriod)} years</DescriptionList
+					>{formatYears(data.dashboard.solar_info.paybackPeriod)}</DescriptionList
 				>
 			</div>
 
@@ -122,7 +136,7 @@
 
 			<div class="flex flex-col pb-3">
 				<DescriptionList tag="dt" class="mb-1">Efficiency:</DescriptionList>
-				<DescriptionList tag="dd">{data.dashboard.solar_info.efficiency} %</DescriptionList>
+				<DescriptionList tag="dd">{formatNumber(data.dashboard.solar_info.efficiency)} %</DescriptionList>
 			</div>
 		</div>
 		<div color="purple" class="my-8 p-6 rounded-xl shadow-lg">
@@ -138,7 +152,7 @@
 					{#each Object.entries(powerGeneration) as [month, value]}
 						<TableBodyRow>
 							<TableBodyCell>{month}</TableBodyCell>
-							<TableBodyCell>{value.toFixed(0)} kW</TableBodyCell>
+							<TableBodyCell>{formatNumber(value)} kW</TableBodyCell>
 						</TableBodyRow>
 					{/each}
 				</TableBody>
@@ -158,7 +172,7 @@
 					{#each Object.entries(monthlyIncome) as [month, value]}
 						<TableBodyRow>
 							<TableBodyCell>{month}</TableBodyCell>
-							<TableBodyCell>{value.toFixed(0)} €</TableBodyCell>
+							<TableBodyCell>{formatNumber(value)} €</TableBodyCell>
 						</TableBodyRow>
 					{/each}
 				</TableBody>
