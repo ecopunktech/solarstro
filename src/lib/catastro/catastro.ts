@@ -1,6 +1,6 @@
 import { XMLParser } from 'fast-xml-parser';
 
-
+const PROXY_HOST = 'catastro-proxy.madacluster.workers.dev';
 class Coor {
 	x: string;
 	y: string;
@@ -80,7 +80,7 @@ export class Catastro {
 
 	async getRawData(): Promise<any | Error> {
 		const responseM2 = await fetch(
-			'http://ovc.catastro.meh.es/ovcservweb/OVCSWLocalizacionRC/OVCCallejero.asmx/Consulta_DNPRC',
+			`https://${PROXY_HOST}/ovcservweb/OVCSWLocalizacionRC/OVCCallejero.asmx/Consulta_DNPRC`,
 			{
 				headers: {
 					accept: 'application/xml',
@@ -113,7 +113,7 @@ export class Catastro {
 		this.setDireccion(data);
 		this.setUso(data);
 		this.setSubparcelas(data);
-		// await this.setRemoteCoor();
+		await this.setRemoteCoor();
 	}
 
 	setMunicipio(data: any) {
@@ -180,7 +180,7 @@ export class Catastro {
 	}
 
 	async setRemoteCoor(): Promise<any | Error> {
-		const url = `http://ovc.catastro.meh.es/OVCServWeb/OVCWcfCallejero/COVCCoordenadas.svc/rest/Consulta_CPMRC?SRS=EPSG:4326&RefCat=${this.rc}`;
+		const url = `https://${PROXY_HOST}/OVCServWeb/OVCWcfCallejero/COVCCoordenadas.svc/rest/Consulta_CPMRC?SRS=EPSG:4326&RefCat=${this.rc}`;
 		const responseCoor = await fetch(url);
 		if (responseCoor.status !== 200) {
 			return Error('Error getting data from catastro');
@@ -199,7 +199,7 @@ export async function getGeoDataFromRC(rc: string) {
 	// const cat = new Catastro(rc);
 	// await cat.getRemoteData();
 	// https://ovc.catastro.meh.es/INSPIRE/wfsCP.aspx?service=wfs&version=2&request=getfeature&STOREDQUERIE_ID=GetParcel&refcat=33034A02000032&srsname=EPSG::4326
-	const url = `http://ovc.catastro.meh.es/INSPIRE/wfsCP.aspx?service=wfs&version=2&request=getfeature&STOREDQUERIE_ID=GetParcel&refcat=${rc}&srsname=EPSG::4326`;
+	const url = `https://${PROXY_HOST}/INSPIRE/wfsCP.aspx?service=wfs&version=2&request=getfeature&STOREDQUERIE_ID=GetParcel&refcat=${rc}&srsname=EPSG::4326`;
 	const response = await fetch(url);
 
 	if (response.status !== 200) {
