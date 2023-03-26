@@ -1,8 +1,6 @@
 <script lang="ts">
-	import type { PageData } from './$types';
-
-	import { getMonthlyIncomeAndPowerGeneration } from '$lib/catastro/solar';
-	import { List, Heading, DescriptionList } from 'flowbite-svelte';
+	import { Heading } from 'flowbite-svelte';
+    import BarChart from './Chart.svelte';
 	import {
 		Table,
 		TableBody,
@@ -12,7 +10,7 @@
 		TableHeadCell
 	} from 'flowbite-svelte';
     import { Toggle } from 'flowbite-svelte'
-	function formatNumber(num: number): string {
+	function formatNumber(num: number | null): string {
 		const options = {
 			useGrouping: true,
 			maximumFractionDigits: 2,
@@ -20,17 +18,14 @@
 			currencyDisplay: 'symbol',
 			style: 'decimal'
 		};
+        if (num === null) {
+            return '0';
+        }
 
 		return num.toLocaleString('es-ES', options);
 	}
 
 	export let data: any;
-	// let powerGeneration = getMonthlyIncomeAndPowerGeneration(data.dashboard).powerGeneration;
-	// let monthlyIncome = getMonthlyIncomeAndPowerGeneration(data.dashboard).monthlyIncome;
-	import { page } from '$app/stores';
-	// let spanClass = 'flex-1 ml-3 whitespace-nowrap';
-
-	import BarChart from './Chart.svelte';
 	export let show = false;
     function changeShow() {
         showLabel = changeShowText();
