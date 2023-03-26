@@ -62,7 +62,7 @@
 			<Heading id="parcel" color="text-purple-400 dark:text-white" tag="h2" class="mb-4"
 				>Parcel Information</Heading
 			>
-			<List tag="dl" color="text-gray-900 dark:text-white">
+			<List tag="dl" color="text-gray-900">
 				<div class="flex flex-col pb-3">
 					<DescriptionList tag="dt" class="mb-1">Cadastral code:</DescriptionList>
 					<DescriptionList tag="dd">{data.dashboard.cadastral_code}</DescriptionList>
