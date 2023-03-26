@@ -1,5 +1,4 @@
 import { XMLParser } from 'fast-xml-parser';
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'
 
 
 class Coor {
