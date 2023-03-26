@@ -225,8 +225,5 @@ export async function getGeoDataFromRC(rc: string) {
 		}
 		return acc;
 	}, []);
-
-	console.log(JSON.stringify(JSONData));
-	console.log(JSON.stringify(coordsArray));
 	return coordsArray;
 }

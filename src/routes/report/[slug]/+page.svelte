@@ -54,7 +54,13 @@
 	let monthlyIncome = getMonthlyIncomeAndPowerGeneration(data.dashboard).monthlyIncome
 	import { page } from '$app/stores';
 	// let spanClass = 'flex-1 ml-3 whitespace-nowrap';
-	$: activeUrl = $page.url.pathname;
+	$: areaUsed = $page.url.searchParams.get('percentage');
+	function getAreaUsed(area: number, percentage: string) {
+		if (percentage) {
+			return (area * parseFloat(percentage)) / 100;
+		}
+		return area;
+	}
 </script>
 
 <div>
@@ -73,8 +79,12 @@
 					<DescriptionList tag="dd">{data.dashboard.address}</DescriptionList>
 				</div>
 				<div class="flex flex-col pb-3">
-					<DescriptionList tag="dt" class="mb-1">Area:</DescriptionList>
+					<DescriptionList tag="dt" class="mb-1">Total Area:</DescriptionList>
 					<DescriptionList tag="dd">{data.dashboard.area.toFixed(2)} m²</DescriptionList>
+				</div>
+				<div class="flex flex-col pb-3">
+					<DescriptionList tag="dt" class="mb-1">Area Used:</DescriptionList>
+					<DescriptionList tag="dd">{getAreaUsed(data.dashboard.area,areaUsed).toFixed(2)} m²</DescriptionList>
 				</div>
 			</List>
 		</div>
