@@ -80,7 +80,7 @@ export class Catastro {
 
 	async getRawData(): Promise<any | Error> {
 		const responseM2 = await fetch(
-			'https://ovc.catastro.meh.es/ovcservweb/OVCSWLocalizacionRC/OVCCallejero.asmx/Consulta_DNPRC',
+			'http://ovc.catastro.meh.es/ovcservweb/OVCSWLocalizacionRC/OVCCallejero.asmx/Consulta_DNPRC',
 			{
 				headers: {
 					accept: 'application/xml',
