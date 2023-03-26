@@ -8,7 +8,7 @@ import (
 func main() {
 	// GetSolarInfo()
 	http.HandleFunc("/svg", svgHandler)
-	http.HandleFunc("/rectangles", rectanglesHandler)
+	http.HandleFunc("/report", rectanglesHandler)
 
 	fmt.Println("Server listening on :8080")
 
