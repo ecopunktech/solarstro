@@ -1,6 +1,13 @@
 <script lang="ts">
-	import type { PageData } from '../$types';
-	import type { SolarPanelData } from './+page.server';
+	import InstalationInfo from './InstalationInfo.svelte';
+
+	import ParcelInfo from './ParcelInfo.svelte';
+
+	import TableChart from './TableChart.svelte';
+
+	import type { PageData } from './$types';
+
+	import { getMonthlyIncomeAndPowerGeneration } from '$lib/catastro/solar';
 	import { List, Heading, DescriptionList } from 'flowbite-svelte';
 	import {
 		Table,
@@ -10,10 +17,6 @@
 		TableHead,
 		TableHeadCell
 	} from 'flowbite-svelte';
-
-	function roundNumber(num: string) {
-		return parseFloat(num).toFixed(2);
-	}
 
 	function formatNumber(num: number): string {
 		const options = {
@@ -42,25 +45,7 @@
 		}
 		return result;
 	}
-	function getMonthlyIncomeAndPowerGeneration(solarInfo: SolarPanelData) {
-		const powerGeneration = Object.entries(solarInfo.solar_info.powerGeneration)
-			.sort(
-				(a, b) =>
-					new Date(Date.parse(`01 ${a[0]}`)).getTime() -
-					new Date(Date.parse(`01 ${b[0]}`)).getTime()
-			)
-			.reduce((obj, [key, value]) => ({ ...obj, [key]: value }), {});
 
-		const monthlyIncome = Object.entries(solarInfo.solar_info.monthlyIncome)
-			.sort(
-				(a, b) =>
-					new Date(Date.parse(`01 ${a[0]}`)).getTime() -
-					new Date(Date.parse(`01 ${b[0]}`)).getTime()
-			)
-			.reduce((obj, [key, value]) => ({ ...obj, [key]: value }), {});
-
-		return { powerGeneration, monthlyIncome };
-	}
 	export let data: PageData;
 	let powerGeneration = getMonthlyIncomeAndPowerGeneration(data.dashboard).powerGeneration;
 	let monthlyIncome = getMonthlyIncomeAndPowerGeneration(data.dashboard).monthlyIncome;
@@ -76,108 +61,16 @@
 </script>
 
 <div>
-	<div class="my-8 p-6">
-		<div class="my-8 p-6 rounded-xl shadow-lg">
-			<Heading id="parcel" color="text-purple-400 dark:text-white" tag="h2" class="mb-4"
-				>Parcel Information</Heading
-			>
-			<List tag="dl" color="text-gray-900 dark:text-white">
-				<div class="flex flex-col pb-3">
-					<DescriptionList tag="dt" class="mb-1">Cadastral code:</DescriptionList>
-					<DescriptionList tag="dd">{data.dashboard.cadastral_code}</DescriptionList>
-				</div>
-				<div class="flex flex-col pb-3">
-					<DescriptionList tag="dt" class="mb-1">Address:</DescriptionList>
-					<DescriptionList tag="dd">{data.dashboard.address}</DescriptionList>
-				</div>
-				<div class="flex flex-col pb-3">
-					<DescriptionList tag="dt" class="mb-1">Total Area:</DescriptionList>
-					<DescriptionList tag="dd">{formatNumber(data.dashboard.area)} m²</DescriptionList>
-				</div>
-				<div class="flex flex-col pb-3">
-					<DescriptionList tag="dt" class="mb-1">Area Used:</DescriptionList>
-					<DescriptionList tag="dd"
-						>{formatNumber(getAreaUsed(data.dashboard.area, areaUsed))} m²</DescriptionList
-					>
-				</div>
-			</List>
-		</div>
-		<div color="purple" class="my-8 p-6 rounded-xl shadow-lg">
-			<Heading id="installation" color="text-purple-400 dark:text-white" tag="h2" class="mb-4"
-				>Installation Info</Heading
-			>
-			<div class="flex flex-col pb-3">
-				<DescriptionList tag="dt" class="mb-1">Total Power:</DescriptionList>
-				<DescriptionList tag="dd"
-					>{formatNumber(data.dashboard.solar_info.totalPower)} kW</DescriptionList
-				>
-			</div>
-			<div class="flex flex-col pb-3">
-				<DescriptionList tag="dt" class="mb-1">Total Panels:</DescriptionList>
-				<DescriptionList tag="dd">{data.dashboard.solar_info.numSolarPanels}</DescriptionList>
-			</div>
-			<div class="flex flex-col pb-3">
-				<DescriptionList tag="dt" class="mb-1">Total Installation Cost:</DescriptionList>
-				<DescriptionList tag="dd"
-					>{formatNumber(data.dashboard.solar_info.totalInstallationCost)} €</DescriptionList
-				>
-			</div>
-			<div class="flex flex-col pb-3">
-				<DescriptionList tag="dt" class="mb-1">Payback Period:</DescriptionList>
-				<DescriptionList tag="dd"
-					>{formatYears(data.dashboard.solar_info.paybackPeriod)}</DescriptionList
-				>
-			</div>
-
-			<div class="flex flex-col pb-3">
-				<DescriptionList tag="dt" class="mb-1">Lifetime:</DescriptionList>
-				<DescriptionList tag="dd">{data.dashboard.solar_info.lifetime} years</DescriptionList>
-			</div>
-
-			<div class="flex flex-col pb-3">
-				<DescriptionList tag="dt" class="mb-1">Efficiency:</DescriptionList>
-				<DescriptionList tag="dd">{formatNumber(data.dashboard.solar_info.efficiency)} %</DescriptionList>
-			</div>
-		</div>
-		<div color="purple" class="my-8 p-6 rounded-xl shadow-lg">
-			<Heading id="power" color="text-purple-400 dark:text-white" tag="h2" class="mb-4"
-				>Monthly Power</Heading
-			>
-			<Table>
-				<TableHead>
-					<TableHeadCell>Month</TableHeadCell>
-					<TableHeadCell>Kw</TableHeadCell>
-				</TableHead>
-				<TableBody>
-					{#each Object.entries(powerGeneration) as [month, value]}
-						<TableBodyRow>
-							<TableBodyCell>{month}</TableBodyCell>
-							<TableBodyCell>{formatNumber(value)} kW</TableBodyCell>
-						</TableBodyRow>
-					{/each}
-				</TableBody>
-			</Table>
-		</div>
-
-		<div color="purple" class="my-8 p-6 rounded-xl shadow-lg">
-			<Heading id="income" color="text-purple-400 dark:text-white" tag="h2" class="mb-4"
-				>Monthly Income</Heading
-			>
-			<Table>
-				<TableHead>
-					<TableHeadCell>Month</TableHeadCell>
-					<TableHeadCell>Euros</TableHeadCell>
-				</TableHead>
-				<TableBody>
-					{#each Object.entries(monthlyIncome) as [month, value]}
-						<TableBodyRow>
-							<TableBodyCell>{month}</TableBodyCell>
-							<TableBodyCell>{formatNumber(value)} €</TableBodyCell>
-						</TableBodyRow>
-					{/each}
-				</TableBody>
-			</Table>
-		</div>
+	<div class="p-6">
+		<ParcelInfo {data} />
+		<InstalationInfo {data} />
+		<TableChart
+			data={powerGeneration}
+			title="Montly Power"
+			titleChart="Power Generation"
+			unit="kWh"
+		/>
+		<TableChart data={monthlyIncome} title="Montly Incoming" titleChart="Euros" />
 		<!-- Add more fields as needed -->
 	</div>
 </div>
