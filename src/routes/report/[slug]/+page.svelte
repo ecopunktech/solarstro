@@ -67,7 +67,7 @@
 		<TableChart
 			data={powerGeneration}
 			title="Montly Power"
-			titleChart="Power Generation"
+			titleChart="kWh"
 			unit="kWh"
 		/>
 		<TableChart data={monthlyIncome} title="Montly Incoming" titleChart="Euros" />
