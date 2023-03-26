@@ -1,12 +1,16 @@
 package main
 
 import (
+	"context"
 	"crypto/tls"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"net/http"
 	"net/url"
+	"time"
+
+	"github.com/go-redis/redis/v8"
 )
 
 type Coord struct {
@@ -39,7 +43,21 @@ type CatastroResponse struct {
 	ConsultaCPMRCResult ConsultaCPMRCResult `json:"Consulta_CPMRCResult"`
 }
 
-func getCoordinatesFromCadastralCode(cadastralCode string) (CatastroResponse, error) {
+func getCoordinatesFromCadastralCode(cadastralCode string, redisClient *redis.Client) (CatastroResponse, error) {
+	// check if the response is already cached in Redis
+	cacheKey := fmt.Sprintf("catastro:%s", cadastralCode)
+	ctx := context.Background()
+	cachedResponse, err := redisClient.Get(ctx, cacheKey).Bytes()
+	if err == nil {
+		// response found in cache, unmarshal and return it
+		var coord CatastroResponse
+		err = json.Unmarshal(cachedResponse, &coord)
+		if err != nil {
+			return coord, fmt.Errorf("failed to unmarshal cached response: %v", err)
+		}
+		return coord, nil
+	}
+
 	client := &http.Client{
 		Transport: &http.Transport{
 			TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
@@ -78,6 +96,17 @@ func getCoordinatesFromCadastralCode(cadastralCode string) (CatastroResponse, er
 	err = json.Unmarshal(body, &coord)
 	if err != nil {
 		return coord, err
+	}
+
+	// cache the response in Redis
+	responseBytes, err := json.Marshal(coord)
+	if err != nil {
+		fmt.Println("Failed to marshal response:", err)
+	} else {
+		err = redisClient.Set(ctx, cacheKey, responseBytes, 24*time.Hour).Err()
+		if err != nil {
+			fmt.Println("Failed to cache response:", err)
+		}
 	}
 
 	return coord, nil

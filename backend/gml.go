@@ -2,6 +2,7 @@ package main
 
 import (
 	"bytes"
+	"context"
 	"crypto/tls"
 	"encoding/xml"
 	"fmt"
@@ -9,7 +10,9 @@ import (
 	"io/ioutil"
 	"net/http"
 	"strings"
+	"time"
 
+	"github.com/go-redis/redis/v8"
 	"golang.org/x/text/encoding/charmap"
 )
 
@@ -83,7 +86,16 @@ func parseCoordinate(coordStr string) float64 {
 	return coord
 }
 
-func getGMLFromCatastro(codigoCatastral string) (string, error) {
+func getGMLFromCatastro(codigoCatastral string, redisClient *redis.Client) (string, error) {
+	// check if the response is already cached in Redis
+	cacheKey := fmt.Sprintf("gml:%s", codigoCatastral)
+	context := context.Background()
+	cachedGML, err := redisClient.Get(context, cacheKey).Result()
+	if err == nil {
+		// response found in cache, return it
+		return cachedGML, nil
+	}
+
 	client := &http.Client{
 		Transport: &http.Transport{
 			TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
@@ -116,6 +128,12 @@ func getGMLFromCatastro(codigoCatastral string) (string, error) {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return "", fmt.Errorf("failed to read response body: %v", err)
+	}
+
+	// cache the response in Redis
+	err = redisClient.Set(context, cacheKey, string(body), 24*time.Hour).Err()
+	if err != nil {
+		fmt.Println("Failed to cache response:", err)
 	}
 
 	return string(body), nil
