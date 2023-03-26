@@ -17,7 +17,7 @@
 		"@playwright/test": "^1.28.1",
 		"@sveltejs/adapter-auto": "^1.0.2",
 		"@sveltejs/adapter-cloudflare": "^1.0.0",
-		"@sveltejs/kit": "^1.0.10",
+		"@sveltejs/kit": "^1.7.1",
 		"@types/xml2js": "^0.4.11",
 		"@typescript-eslint/eslint-plugin": "^5.48.1",
 		"@typescript-eslint/parser": "^5.56.0",
