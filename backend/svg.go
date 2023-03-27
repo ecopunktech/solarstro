@@ -26,14 +26,14 @@ func createSVG(polygon []Point, rectangles []Rectangle) ([]byte, error) {
 	var buffer bytes.Buffer
 	canvas := svg.New(&buffer)
 	canvas.Start(int(width), int(height))
-	canvas.Gstyle("fill:blue;stroke:black")
+	canvas.Gstyle("fill:#C9A0DC;stroke:black")
 
 	// Draw polygon
 	canvas.Polygon(polygonToSVGPoints(polygon))
 
 	// Draw rectangles
 	for _, r := range rectangles {
-		canvas.Rect(int(r.TopLeft.X), int(r.TopLeft.Y), int(r.Width), int(r.Height), "fill:orange;stroke:black")
+		canvas.Rect(int(r.TopLeft.X), int(r.TopLeft.Y), int(r.Width), int(r.Height), "fill:yellow;stroke:black")
 	}
 
 	canvas.Gend()

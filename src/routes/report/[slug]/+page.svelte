@@ -8,44 +8,6 @@
 	import type { PageData } from './$types';
 
 	import { getMonthlyIncomeAndPowerGeneration } from '$lib/catastro/solar';
-	import { List, Heading, DescriptionList } from 'flowbite-svelte';
-	import {
-		Table,
-		TableBody,
-		TableBodyCell,
-		TableBodyRow,
-		TableHead,
-		TableHeadCell
-	} from 'flowbite-svelte';
-
-	function formatNumber(num: number): string {
-		const options = {
-			useGrouping: true,
-			maximumFractionDigits: 2,
-			minimumFractionDigits: 2,
-			currencyDisplay: 'symbol',
-			style: 'decimal'
-		};
-
-		return num.toLocaleString('es-ES', options);
-	}
-
-	function formatYears(years: number) {
-		const wholeYears = Math.floor(years);
-		const months = Math.floor((years - wholeYears) * 12);
-		let result = `${wholeYears} year`;
-		if (wholeYears !== 1) {
-			result += 's';
-		}
-		if (months > 0) {
-			result += ` ${months} month`;
-			if (months !== 1) {
-				result += 's';
-			}
-		}
-		return result;
-	}
-
 	export let data: PageData;
 	let powerGeneration = getMonthlyIncomeAndPowerGeneration(data.dashboard).powerGeneration;
 	let monthlyIncome = getMonthlyIncomeAndPowerGeneration(data.dashboard).monthlyIncome;

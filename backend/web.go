@@ -18,6 +18,17 @@ func svgHandler(redisClient *redis.Client) func(w http.ResponseWriter, r *http.R
 			return
 		}
 
+		areaPercentageQuery := query.Get("percentage")
+		if areaPercentageQuery == "" {
+			areaPercentageQuery = "100"
+		}
+
+		areaPercentage, err := strconv.ParseFloat(areaPercentageQuery, 64)
+		if err != nil && areaPercentage < 0 && areaPercentage > 100 {
+			http.Error(w, "Invalid 'area_percentage' parameter", http.StatusBadRequest)
+			return
+		}
+
 		gmlFile, err := getGMLFromCatastro(rc, redisClient)
 		if err != nil {
 			fmt.Println(err)
@@ -36,7 +47,9 @@ func svgHandler(redisClient *redis.Client) func(w http.ResponseWriter, r *http.R
 		// scaleFactor := 10.0
 		scaledPolygon := scaleCoordinates(polygon, 1000, 1000)
 		rectangule := make([]Rectangle, len(panels))
-		for i, p := range panels {
+		panelsUsed := int(float64(len(panels)) * areaPercentage / 100)
+		fmt.Println("panelsUsed", panelsUsed)
+		for i, p := range panels[:panelsUsed] {
 			rectangule[i] = scaleRectangle(p, minPoint, maxPoint, 1000, 1000)
 		}
 		svgData, err := createSVG(scaledPolygon, rectangule)
