@@ -11,15 +11,7 @@
 	export let data: PageData;
 	let powerGeneration = getMonthlyIncomeAndPowerGeneration(data.dashboard).powerGeneration;
 	let monthlyIncome = getMonthlyIncomeAndPowerGeneration(data.dashboard).monthlyIncome;
-	import { page } from '$app/stores';
-	// let spanClass = 'flex-1 ml-3 whitespace-nowrap';
-	$: areaUsed = $page.url.searchParams.get('percentage');
-	function getAreaUsed(area: number, percentage: string) {
-		if (percentage) {
-			return (area * parseFloat(percentage)) / 100;
-		}
-		return area;
-	}
+
 </script>
 
 <div>

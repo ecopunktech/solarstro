@@ -7,9 +7,11 @@ export const load = (async ({ params, url }) => {
     const budget = url.searchParams.get('budget');
     const localURI = `http://localhost:8080/report?rc=${params.slug}&percentage=${percentage}&budget=${budget}`;
     const backendURI = `https://solar-backend.fly.dev/report?rc=${params.slug}&percentage=${percentage}&budget=${budget}`;
+	const svgURI = `http://solar-backend.fly.dev/svg?rc=33034A02000032&percentage=${percentage}`;
 	const dashboard = await fetch(backendURI).then(
 		(r) => r.json()
 	);
+	const svg = await fetch(svgURI).then(svgURI => svgURI.text());
 	const dasObj: SolarPanelData = dashboard as SolarPanelData;
-	return { dashboard: dasObj };
+	return { dashboard: dasObj, svg: svg };
 }) satisfies PageServerLoad;

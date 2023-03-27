@@ -27,7 +27,7 @@
 	}
 </script>
 
-<div class="p-6 rounded-xl shadow-lg">
+<div class="my-8 p-6  rounded-xl shadow-lg">
 	<Heading id="parcel" color="text-purple-400 dark:text-white" tag="h2" class="mb-4"
 		>Parcel Information</Heading
 	>

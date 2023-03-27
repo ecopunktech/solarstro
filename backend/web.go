@@ -45,12 +45,12 @@ func svgHandler(redisClient *redis.Client) func(w http.ResponseWriter, r *http.R
 		panels := rectanglesInsidePolygon(polygon, Rectangle{Width: 2, Height: 2})
 
 		// scaleFactor := 10.0
-		scaledPolygon := scaleCoordinates(polygon, 1000, 1000)
+		scaledPolygon := scaleCoordinates(polygon, 300, 400)
 		rectangule := make([]Rectangle, len(panels))
 		panelsUsed := int(float64(len(panels)) * areaPercentage / 100)
 		fmt.Println("panelsUsed", panelsUsed)
 		for i, p := range panels[:panelsUsed] {
-			rectangule[i] = scaleRectangle(p, minPoint, maxPoint, 1000, 1000)
+			rectangule[i] = scaleRectangle(p, minPoint, maxPoint, 300, 400)
 		}
 		svgData, err := createSVG(scaledPolygon, rectangule)
 		if err != nil {

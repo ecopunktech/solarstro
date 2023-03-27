@@ -4,7 +4,7 @@
 
 	import { Heading, DescriptionList, Img, List } from 'flowbite-svelte';
 
-	function formatNumber(num: number): string {
+	function formatNumber(number: number): string {
 		const options = {
 			useGrouping: true,
 			maximumFractionDigits: 2,
@@ -13,8 +13,10 @@
 			style: 'decimal'
 		};
 
-		return num.toLocaleString('es-ES', options);
+		return number.toLocaleString('es-ES', options);
 	}
+
+
 
 	function formatYears(years: number) {
 		const wholeYears = Math.floor(years);
@@ -40,13 +42,8 @@
 		>Installation Info</Heading
 	>
 	<div class="md:flex">
-		<div class="flex p-2 rounded-xl shadow-lg">
-			<Img
-				src="http://localhost:8080/svg?rc=33034A02000032&percentage={areaUsed}"
-				alt="example image"
-				size="max-w-sm"
-				class="rounded-lg"
-			/>
+		<div class="p-2 rounded-xl shadow-lg">
+			{@html data.svg}
 		</div>
 		<List class="p-6" tag="dl" color="text-gray-900">
 			<div class="flex flex-col pb-3">
