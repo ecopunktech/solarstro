@@ -1,17 +1,15 @@
 import type { PageServerLoad } from './$types';
 import type { SolarPanelData } from '$lib/catastro/solar';
 
-
 export const load = (async ({ params, url }) => {
-    const percentage = url.searchParams.get('percentage');
-    const budget = url.searchParams.get('budget');
-    const localURI = `http://localhost:8080/report?rc=${params.slug}&percentage=${percentage}&budget=${budget}`;
-    const backendURI = `https://solar-backend.fly.dev/report?rc=${params.slug}&percentage=${percentage}&budget=${budget}`;
-	const svgURI = `http://solar-backend.fly.dev/svg?rc=33034A02000032&percentage=${percentage}`;
-	const dashboard = await fetch(backendURI).then(
-		(r) => r.json()
-	);
-	const svg = await fetch(svgURI).then(svgURI => svgURI.text());
+	const percentage = url.searchParams.get('percentage');
+	const budget = url.searchParams.get('budget');
+	const local = true;
+	const host = local ? 'http://localhost:8080' : 'https://solar-backend.fly.dev';
+	const backendURI = `${host}/report?rc=${params.slug}&percentage=${percentage}&budget=${budget}`;
+	const svgURI = `${host}/svg?rc=${params.slug}&percentage=${percentage}`;
+	const dashboard = await fetch(backendURI).then((r) => r.json());
+	const svg = await fetch(svgURI).then((svgURI) => svgURI.text());
 	const dasObj: SolarPanelData = dashboard as SolarPanelData;
 	return { dashboard: dasObj, svg: svg };
 }) satisfies PageServerLoad;

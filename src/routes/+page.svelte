@@ -1,5 +1,6 @@
 <script>
 	import CatastroInput from './CatastroInput.svelte';
+	import BillOfMaterials from '$lib/BillOfMaterials.svelte';
 
 </script>
 
@@ -18,7 +19,7 @@
 	<div class="container">
 
 		<div class="p-6">
-		<CatastroInput />
+		<BillOfMaterials />
 	</div>
 	</div>
 </section>
