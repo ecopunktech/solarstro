@@ -1,18 +1,19 @@
 <!-- Header.svelte -->
 <script>
 	import { Navbar, NavBrand, NavLi, NavUl, NavHamburger } from 'flowbite-svelte';
+	import {Sun} from 'svelte-heros-v2'
     import "../app.postcss"
 
 </script>
 
 <Navbar let:hidden let:toggle>
+	
 	<NavBrand href="/">
-		<img
-			src="/solarstro-logo/cover.png"
-			class="mr-3 h-9 sm:h-16"
-			alt="Flowbite Logo"
-		/>
-
+		<span class="p-2 text-purple-400 text-xl font-semibold dark:text-white">
+			Solar
+		  </span>
+		<Sun class="ml-2" size="35" />
+		
 	</NavBrand>
 	
 	<NavHamburger color="purple"  on:click={toggle} />

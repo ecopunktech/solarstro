@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Heading } from 'flowbite-svelte';
-	import BarChart from './Chart.svelte';
+	import BarChart from '$lib/Chart.svelte';
 	import {
 		Table,
 		TableBody,
@@ -43,9 +43,9 @@
 	export let unit = '€';
 </script>
 
-<div color="purple" class="my-8 p-6 rounded-xl shadow-lg">
+<div color="purple" class="p-6">
 	<div class="flex">
-		<Heading id="income" color="text-purple-400 dark:text-white" tag="h2" class="mb-4"
+		<Heading id="income" color="text-purple-400 dark:text-white" tag="h3" class="mb-4"
 			>{title}</Heading
 		>
 		<Toggle color="purple" checked on:change={changeShow}>{showLabel}</Toggle>
@@ -53,13 +53,13 @@
 	<div>
 		{#if show}
 			<Table hoverable={true} shadow>
-				<TableHead>
+				<TableHead class="bg-purple-300">
 					<TableHeadCell>Month</TableHeadCell>
 					<TableHeadCell>Euros</TableHeadCell>
 				</TableHead>
 				<TableBody>
 					{#each Object.entries(data) as [month, value]}
-						<TableBodyRow>
+						<TableBodyRow class="hover:bg-purple-100">
 							<TableBodyCell>{month}</TableBodyCell>
 							<TableBodyCell >{formatNumber(value)} {unit}</TableBodyCell>
 						</TableBodyRow>
@@ -68,7 +68,10 @@
 			</Table>
 		{/if}
 		{#if !show}
+		<div color="purple" class="p-6 rounded-xl shadow-lg">
+
 			<BarChart {data} title={titleChart} />
+			</div>
 		{/if}
 	</div>
 </div>
