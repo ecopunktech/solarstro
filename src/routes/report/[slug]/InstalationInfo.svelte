@@ -2,7 +2,7 @@
 	import type { PageData } from './$types';
 	import { page } from '$app/stores';
 
-	import { Heading, DescriptionList, Img, List } from 'flowbite-svelte';
+	import { DescriptionList, List } from 'flowbite-svelte';
 
 	function formatNumber(number: number): string {
 		const options = {
@@ -80,13 +80,13 @@
 				>
 			</div>
 		</List>
-		
+
 		<List class="p-6" tag="dl" color="text-gray-900">
 			<div class="flex flex-col pb-2">
 				<DescriptionList tag="dt" class="mb-1">Cadastral code:</DescriptionList>
 				<DescriptionList tag="dd">{data.dashboard.cadastral_code}</DescriptionList>
 			</div>
-			<div class="flex flex-col pb-2">
+			<div class="flex flex-col pb-3">
 				<DescriptionList tag="dt" class="mb-1">Address:</DescriptionList>
 				<DescriptionList tag="dd">{data.dashboard.address}</DescriptionList>
 			</div>
@@ -96,16 +96,12 @@
 			</div>
 			<div class="flex flex-col pb-3">
 				<DescriptionList tag="dt" class="mb-1">Area Used:</DescriptionList>
-				<DescriptionList tag="dd"
-					>{formatNumber(getAreaUsed(data.dashboard.area, areaUsed))} m²</DescriptionList
-				>
+				<DescriptionList tag="dd">
+					{formatNumber(getAreaUsed(data.dashboard.area, areaUsed))} m²
+				</DescriptionList>
 			</div>
 		</List>
-
-		
-	
 	</div>
-	
 </div>
 
 <style>

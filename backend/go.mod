@@ -4,9 +4,8 @@ go 1.17
 
 require (
 	github.com/ajstarks/svgo v0.0.0-20211024235047-1546f124cd8b
-	github.com/go-redis/redis v6.15.9+incompatible
 	github.com/go-redis/redis/v8 v8.11.5
-	golang.org/x/text v0.3.6
+	golang.org/x/text v0.3.8
 )
 
 require (
