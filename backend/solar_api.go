@@ -169,7 +169,7 @@ func GetSolarInfo(lat, lon string, panels int, panelInfo SolarPanel) (SolarFarmR
 
 	systemCost := GetCost(panels, panelInfo) // €/kWp
 	interestRate := 0.05                     // 5%
-	lost := 4.5                              // 14%
+	lost := 14                               // 14%
 	powerInstalled := panelInfo.GetTotalPower(panels)
 	// La compensación por excedentes es una tarifa que se aplica a los propietarios de granjas solares que generan más energía de la que consumen. El precio de la compensación por excedentes depende de cada comercializadora y de las tarifas que ofrezca, pero la media del mercado nacional está en torno a los 0,100 €/kWh1.
 	compen := 0.1 // €/kWh

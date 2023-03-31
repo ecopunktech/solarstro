@@ -29,6 +29,26 @@ func svgHandler(redisClient *redis.Client) func(w http.ResponseWriter, r *http.R
 			return
 		}
 
+		svgWidthQueryString := query.Get("width")
+		if svgWidthQueryString == "" {
+			svgWidthQueryString = "320"
+		}
+		svgHeightQueryString := query.Get("height")
+		if svgHeightQueryString == "" {
+			svgHeightQueryString = "420"
+		}
+
+		svgWidth, err := strconv.ParseFloat(svgWidthQueryString, 64)
+		if err != nil {
+			http.Error(w, "Invalid 'width' parameter", http.StatusBadRequest)
+			return
+		}
+		svgHeight, err := strconv.ParseFloat(svgHeightQueryString, 64)
+		if err != nil {
+			http.Error(w, "Invalid 'height' parameter", http.StatusBadRequest)
+			return
+		}
+
 		gmlFile, err := getGMLFromCatastro(rc, redisClient)
 		if err != nil {
 			fmt.Println(err)
@@ -45,12 +65,12 @@ func svgHandler(redisClient *redis.Client) func(w http.ResponseWriter, r *http.R
 		panels := rectanglesInsidePolygon(polygon, Rectangle{Width: 2, Height: 2})
 
 		// scaleFactor := 10.0
-		scaledPolygon := scaleCoordinates(polygon, 300, 400)
+		scaledPolygon := scaleCoordinates(polygon, svgWidth, svgHeight)
 		rectangule := make([]Rectangle, len(panels))
 		panelsUsed := int(float64(len(panels)) * areaPercentage / 100)
 		fmt.Println("panelsUsed", panelsUsed)
 		for i, p := range panels[:panelsUsed] {
-			rectangule[i] = scaleRectangle(p, minPoint, maxPoint, 300, 400)
+			rectangule[i] = scaleRectangle(p, minPoint, maxPoint, svgWidth, svgHeight)
 		}
 		svgData, err := createSVG(scaledPolygon, rectangule)
 		if err != nil {
