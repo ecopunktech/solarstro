@@ -1,6 +1,6 @@
 <script>
 	import CatastroInput from './CatastroInput.svelte';
-	import BillOfMaterials from '$lib/BillOfMaterials.svelte';
+	// import BillOfMaterials from '$lib/BillOfMaterials.svelte';
 
 </script>
 
