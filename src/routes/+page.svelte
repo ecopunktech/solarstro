@@ -19,7 +19,7 @@
 	<div class="container">
 
 		<div class="p-6">
-		<BillOfMaterials />
+		<CatastroInput />
 	</div>
 	</div>
 </section>
