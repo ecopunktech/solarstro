@@ -42,7 +42,7 @@
 	export let data: PageData;
 </script>
 
-<div color="purple" class="p-2">
+<div color="orange" class="p-2">
 	<div class="md:flex">
 		<List class="p-6" tag="dl" color="text-gray-900">
 			<div class="flex flex-col pb-3">

@@ -5,8 +5,8 @@
 	export let data: PageData;
 </script>
 
-<div color="purple" class="p-2">
-	<Heading id="parcel" color="text-purple-400 dark:text-white" tag="h2" class="ml-2 mb-1">
+<div color="orange" class="p-2">
+	<Heading id="parcel" color="text-orange-400 dark:text-white" tag="h2" class="ml-2 mb-1">
 		Infomacion General
 	</Heading>
 	<div class="md:flex p-2">

@@ -43,23 +43,23 @@
 	export let unit = '€';
 </script>
 
-<div color="purple" class="p-6">
+<div color="orange" class="p-6">
 	<div class="flex">
-		<Heading id="income" color="text-purple-400 dark:text-white" tag="h3" class="mb-4"
+		<Heading id="income" color="text-orange-400 dark:text-white" tag="h3" class="mb-4"
 			>{title}</Heading
 		>
-		<Toggle color="purple" checked on:change={changeShow}>{showLabel}</Toggle>
+		<Toggle color="orange" checked on:change={changeShow}>{showLabel}</Toggle>
 	</div>
 	<div>
 		{#if show}
 			<Table hoverable={true} shadow>
-				<TableHead class="bg-purple-300">
+				<TableHead class="bg-orange-300">
 					<TableHeadCell>Month</TableHeadCell>
 					<TableHeadCell>Euros</TableHeadCell>
 				</TableHead>
 				<TableBody>
 					{#each Object.entries(data) as [month, value]}
-						<TableBodyRow class="hover:bg-purple-100">
+						<TableBodyRow class="hover:bg-orange-100">
 							<TableBodyCell>{month}</TableBodyCell>
 							<TableBodyCell >{formatNumber(value)} {unit}</TableBodyCell>
 						</TableBodyRow>
@@ -68,7 +68,7 @@
 			</Table>
 		{/if}
 		{#if !show}
-		<div color="purple" class="p-6 rounded-xl shadow-lg">
+		<div color="orange" class="p-6 rounded-xl shadow-lg">
 
 			<BarChart {data} title={titleChart} />
 			</div>

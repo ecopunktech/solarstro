@@ -24,8 +24,8 @@
 					{
 						label: title,
 						data: chartData,
-						backgroundColor: 'rgba(153, 102, 255, 0.2)', // purple background color
-						borderColor: 'rgba(153, 102, 255, 1)', // purple border color
+						backgroundColor: 'rgba(255, 178, 51, 0.2)', // orange background color
+						borderColor: 'rgba(255, 165, 0, 1)', // orange border color
 						borderWidth: 1,
                         borderRadius: 5 
 					}

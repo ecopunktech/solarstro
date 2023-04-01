@@ -26,7 +26,7 @@ func createSVG(polygon []Point, rectangles []Rectangle) ([]byte, error) {
 	var buffer bytes.Buffer
 	canvas := svg.New(&buffer)
 	canvas.Start(int(width), int(height))
-	canvas.Gstyle("fill:#C9A0DC;stroke:black")
+	canvas.Gstyle("fill:#FFA500;stroke:black")
 
 	// Draw polygon
 	canvas.Polygon(polygonToSVGPoints(polygon))
