@@ -16,7 +16,7 @@
 		$message = index;
 	}
 	const activeClass =
-		'flex items-center p-2 text-base font-normal text-orange-900 bg-orange-400  rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700';
+		'flex items-center p-2 text-base font-normal text-orange-900 bg-orange-400 text-white hover:text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700';
 	const nonActiveClass =
 		'flex items-center p-2 text-base font-normal text-gray-900 bg-orange-200 dark:bg-gray-700 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700';
 </script>
@@ -27,7 +27,7 @@
 			<SidebarWrapper class="'overflow-y-auto py-4 px-3 bg-white rounded dark:bg-gray-800">
 				<SidebarGroup>
 					<SidebarItem
-						label="Informaction General"
+						label="Información General"
 						active={$message === 'general'}
 						on:click={() => changeIndex('general')}
 						{activeClass}
