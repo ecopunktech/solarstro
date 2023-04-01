@@ -99,11 +99,11 @@
 </script>
 
 <div>
-	<Heading color="ml-6 text-purple-400 dark:text-white" class="flex items-center" tag="h2">
+	<Heading color="ml-6 text-orange-400 dark:text-white" class="flex items-center" tag="h2">
 		Redimiento Económico
 	</Heading>
 </div>
-<div color="purple" class="p-2">
+<div color="orange" class="p-2">
 	<div class="md:flex">
 		<List class="p-6" tag="dl" color="text-gray-900">
 			<div class="flex flex-col pb-3">

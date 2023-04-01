@@ -62,8 +62,8 @@
 
 <div>
 	{#if !direccion}
-	<div color="purple" class="my-8 p-6 rounded-xl shadow-lg">
-		<form color="purple" id="search" on:submit={getCatrastroInfo}>
+	<div color="orange" class="my-8 p-6 rounded-xl shadow-lg">
+		<form color="orange" id="search" on:submit={getCatrastroInfo}>
 		<Search placeholder="Escribe el numero de catastro" bind:value={rc}>
 			<Button color="primary" type="submit" disabled={isValidRC(rc) }>Search</Button>
 		  </Search>

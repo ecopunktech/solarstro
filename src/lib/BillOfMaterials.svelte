@@ -102,10 +102,10 @@
 	};
 </script>
 
-<Heading color="text-purple-400 dark:text-white" tag="h2" class="mb-4">Materiales</Heading>
+<Heading color="text-orange-400 dark:text-white" tag="h2" class="mb-4">Materiales</Heading>
 <div>
 	<Table hoverable={true} shadow>
-		<TableHead class="bg-purple-300">
+		<TableHead class="bg-orange-300">
 			<TableHeadCell>Componente</TableHeadCell>
 			<TableHeadCell>Cantidad</TableHeadCell>
 			<TableHeadCell>Precio Unidad</TableHeadCell>
@@ -114,7 +114,7 @@
 		</TableHead>
 		<TableBody class="divide-y">
 			{#each data.items as item}
-				<TableBodyRow class="hover:bg-purple-100">
+				<TableBodyRow class="hover:bg-orange-100">
 					<TableBodyCell>{item.item}</TableBodyCell>
 					<TableBodyCell>{item.amount}</TableBodyCell>
 					<TableBodyCell>{item.unit_price}</TableBodyCell>
@@ -122,14 +122,14 @@
 					<TableBodyCell
 						><a
 							href={item.link}
-							class="font-medium text-purple-600 hover:underline dark:text-purple-500">Comprar</a
+							class="font-medium text-orange-600 hover:underline dark:text-orange-500">Comprar</a
 						></TableBodyCell
 					>
 				</TableBodyRow>
 			{/each}
 		</TableBody>
 		<tfoot>
-			<tr class="font-semibold  bg-purple-200 text-gray-900 dark:text-white">
+			<tr class="font-semibold  bg-orange-200 text-gray-900 dark:text-white">
 				<th scope="row" class="py-3 px-6 text-base">Total</th>
 				<td class="py-3 px-6" />
 				<td class="py-3 px-6" />

@@ -16,9 +16,9 @@
 		$message = index;
 	}
 	const activeClass =
-		'flex items-center p-2 text-base font-normal text-purple-900 bg-purple-400  rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700';
+		'flex items-center p-2 text-base font-normal text-orange-900 bg-orange-400  rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700';
 	const nonActiveClass =
-		'flex items-center p-2 text-base font-normal text-gray-900 bg-purple-200 dark:bg-gray-700 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700';
+		'flex items-center p-2 text-base font-normal text-gray-900 bg-orange-200 dark:bg-gray-700 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700';
 </script>
 
 <div class="flex">
