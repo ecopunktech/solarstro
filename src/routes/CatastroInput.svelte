@@ -65,7 +65,7 @@
 	<div color="orange" class="my-8 p-6 rounded-xl shadow-lg">
 		<form color="orange" id="search" on:submit={getCatrastroInfo}>
 		<Search placeholder="Escribe el numero de catastro" bind:value={rc}>
-			<Button color="primary" type="submit" disabled={isValidRC(rc) }>Search</Button>
+			<Button color="primary" class="bg-[#FF9119] hover:bg-[#FF9119]/80" type="submit" disabled={isValidRC(rc) }>Search</Button>
 		  </Search>
 		</form>
 	</div>

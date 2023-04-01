@@ -17,7 +17,6 @@
 		{ value: 'high', name: 'Go Big' }
 	];
 
-
 	// create method to tranform m2 string value to number
 	function m2ToNumber() {
 		return parseFloat(m2);
@@ -73,16 +72,24 @@
 			</div>
 		</div>
 
-		<Range id="range-steps" min="0" max="100" bind:value={stepValue} step="25" on:change={handleRangeChange}/>
+		<Range
+			color="primary"
+			id="range-steps"
+			min="0"
+			max="100"
+			bind:value={stepValue}
+			step="25"
+			on:change={handleRangeChange}
+		/>
 		<Heading class="mb-3" tag="h6">Selecciona el presupuesto que tienes disponible</Heading>
 		<Select
-			class="mb-3 mt-2 grid md:grid-cols-2"
+			class="focus:ring-orange-200 focus:border-orange-500 mb-3 mt-2 grid md:grid-cols-2"
 			items={budget}
 			bind:value={selected}
 			on:change={handleRangeChange}
 		/>
 
-		<Button color="primary" {href}>
+		<Button color="primary" class="bg-[#FF9119] hover:bg-[#FF9119]/80 " {href}>
 			Elegir <svg
 				xmlns="http://www.w3.org/2000/svg"
 				fill="none"
@@ -99,3 +106,6 @@
 		</Button>
 	</div>
 </div>
+
+<style>
+</style>
