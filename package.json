@@ -44,7 +44,7 @@
 		"@popperjs/core": "^2.11.6",
 		"@sentry/node": "^7.30.0",
 		"@sentry/svelte": "^7.30.0",
-		"@sentry/tracing": "^7.45.0",
+		"@sentry/tracing": "^7.47.0",
 		"@sentry/vite-plugin": "^0.4.0",
 		"@turf/buffer": "^6.5.0",
 		"@turf/collect": "^6.5.0",
