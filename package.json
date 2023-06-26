@@ -54,7 +54,7 @@
 		"chart.js": "^4.2.1",
 		"classnames": "^2.3.2",
 		"events": "^3.3.0",
-		"fast-xml-parser": "^4.0.14",
+		"fast-xml-parser": "^4.2.5",
 		"flowbite": "^1.6.4",
 		"flowbite-svelte": "^0.33.1",
 		"leaflet": "^1.9.3",
